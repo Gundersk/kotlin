@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">learnEnglishApp</string>
+
+    <string name="correct_answer">Верный ответ</string>
+    <string name="correct">Верно!</string>
+    <string name="continue_button">ПРОДОЛЖИТЬ</string>
+    <string name="skip">ПРОПУСТИТЬ</string>
+
+
+    <string name="wrong_text">Неверно!</string>
+    <string name="close">Закрыть</string>
+
+
+</resources>
