@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.example.learnenglishapp.databinding.ActivityLearnWordBinding
 import org.w3c.dom.Text
+import test.LearnWordsTrainer
+import test.Question
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,38 +29,140 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        val  trainer = LearnWordsTrainer()
 
-        binding.layoutAnswer3.setOnClickListener{
-            markAnswerCorrect(
-                binding.layoutAnswer3,
-                binding.tvVariantValue3,
-                binding.tvThirdAnswer
-            )
-            showResultMessage(true)
+        with(binding)
+        {
+            showNextQuestion(trainer)
+            layoutAnswer1.setOnClickListener {
+                if (trainer.checkAnswer(0)) {
+                    markAnswerCorrect(
+                        layoutAnswer1,
+                        tvVariantValue1,
+                        tvFirstAnswer
+                    )
+                    showResultMessage(true)
+                } else {
+                    markAnswerWrong(
+                        layoutAnswer1,
+                        tvVariantValue1,
+                        tvFirstAnswer
+                    )
+                    showResultMessage(false)
+                }
+
+            }
+
+            layoutAnswer2.setOnClickListener {
+                if (trainer.checkAnswer(1)) {
+                    markAnswerCorrect(
+                        layoutAnswer2,
+                        tvVariantValue2,
+                        tvSecondtAnswer
+                    )
+                    showResultMessage(true)
+                } else {
+                    markAnswerWrong(
+                        layoutAnswer2,
+                        tvVariantValue2,
+                        tvSecondtAnswer
+                    )
+                    showResultMessage(false)
+                }
+
+            }
+
+            layoutAnswer3.setOnClickListener {
+                if (trainer.checkAnswer(2)) {
+                    markAnswerCorrect(
+                        layoutAnswer3,
+                        tvVariantValue3,
+                        tvThirdAnswer
+                    )
+                    showResultMessage(true)
+                } else {
+                    markAnswerWrong(
+                        layoutAnswer3,
+                        tvVariantValue3,
+                        tvThirdAnswer
+                    )
+                    showResultMessage(false)
+                }
+            }
+
+            layoutAnswer4.setOnClickListener {
+                if (trainer.checkAnswer(3)) {
+                    markAnswerCorrect(
+                        layoutAnswer4,
+                        tvVariantValue4,
+                        tvFourthAnswer
+                    )
+                    showResultMessage(true)
+                } else {
+                    markAnswerWrong(
+                        layoutAnswer4,
+                        tvVariantValue4,
+                        tvFourthAnswer
+                    )
+                    showResultMessage(false)
+                }
+
+            }
+
+
+
+            btnContinue.setOnClickListener {
+                markAnswerNeutral(
+                    layoutAnswer1,
+                    tvVariantValue1,
+                    tvFirstAnswer
+                )
+                markAnswerNeutral(
+                    layoutAnswer2,
+                    tvVariantValue2,
+                    tvSecondtAnswer
+                )
+
+                markAnswerNeutral(
+                    layoutAnswer3,
+                    tvVariantValue3,
+                    tvThirdAnswer
+                )
+                markAnswerNeutral(
+                    layoutAnswer4,
+                    tvVariantValue4,
+                    tvFourthAnswer
+                )
+
+                showNextQuestion(trainer)
+            }
+
+            btnSkip.setOnClickListener {
+                showNextQuestion(trainer)
+            }
+
         }
 
-        binding.layoutAnswer1.setOnClickListener {
-            markAnswerWrong(
-                binding.layoutAnswer1,
-                binding.tvVariantValue1,
-                binding.tvFirstAnswer
-            )
-            showResultMessage(false)
-        }
+    }
 
-        binding.btnContinue.setOnClickListener {
-            markAnswerNeutral(
-                binding.layoutAnswer3,
-                binding.tvVariantValue3,
-                binding.tvThirdAnswer
-            )
-            markAnswerNeutral(
-                binding.layoutAnswer1,
-                binding.tvVariantValue1,
-                binding.tvFirstAnswer
-            )
-        }
+    private fun showNextQuestion(trainer: LearnWordsTrainer){
+        val firstQuestion: Question? = trainer.getNextQuestion()
 
+        with(binding){
+            if(firstQuestion == null){
+                tvQuestionWord.isVisible = false
+                btnSkip.text = "Complete"
+            }else{
+                btnSkip.isVisible = true
+                tvQuestionWord.isVisible = true
+                tvQuestionWord.text = firstQuestion.correctAnswer.original
+                tvFirstAnswer.text = firstQuestion.variants[0].translate
+                tvSecondtAnswer.text = firstQuestion.variants[1].translate
+                tvThirdAnswer.text = firstQuestion.variants[2].translate
+                tvFourthAnswer.text = firstQuestion.variants[3].translate
+            }
+
+        }
     }
 
     private fun showResultMessage(isCorrect: Boolean){
