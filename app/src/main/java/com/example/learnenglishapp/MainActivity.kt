@@ -1,18 +1,13 @@
 package com.example.learnenglishapp
 
-import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.example.learnenglishapp.databinding.ActivityLearnWordBinding
-import org.w3c.dom.Text
 import test.LearnWordsTrainer
 import test.Question
 
@@ -109,6 +104,10 @@ class MainActivity : AppCompatActivity() {
 
             }
 
+            closeButton.setOnClickListener {
+                finish()
+            }
+
 
 
             btnContinue.setOnClickListener {
@@ -141,17 +140,43 @@ class MainActivity : AppCompatActivity() {
                 showNextQuestion(trainer)
             }
 
+            btnExit.setOnClickListener {
+                finish()
+            }
+
         }
 
     }
 
+    private fun updateProgress(trainer: LearnWordsTrainer) = with(binding) {
+        val learned = trainer.getLearnedCount()
+        val total = trainer.getTotalCount()
+        val percent = trainer.getLearnedPercent()
+
+        tvProgress.text = "$learned/$total"
+        progressWords.setProgress(percent, true)
+    }
+
     private fun showNextQuestion(trainer: LearnWordsTrainer){
         val firstQuestion: Question? = trainer.getNextQuestion()
+        updateProgress(trainer)
 
         with(binding){
+            //Если все выучили
             if(firstQuestion == null){
-                tvQuestionWord.isVisible = false
-                btnSkip.text = "Complete"
+                tvQuestionWord.text = getString(R.string.congratulations)
+                tvFirstAnswer.isVisible = false
+                tvSecondtAnswer.isVisible = false
+                tvThirdAnswer.isVisible = false
+                tvFourthAnswer.isVisible = false
+
+                layoutAnswer1.isVisible = false
+                layoutAnswer2.isVisible = false
+                layoutAnswer3.isVisible = false
+                layoutAnswer4.isVisible = false
+
+                btnExit.text = getString(R.string.finish_button)
+                btnExit.isVisible = true
             }else{
                 btnSkip.isVisible = true
                 tvQuestionWord.isVisible = true

@@ -7,6 +7,8 @@
     <string name="skip">SKIP</string>
     <string name="wrong_text">Incorrect!</string>
     <string name="close">Close</string>
+    <string name="congratulations">Congratulations! You have learned all the words!</string>
+    <string name="finish_button">Close</string>
 
 
 </resources>

@@ -9,6 +9,8 @@
 
     <string name="wrong_text">Неверно!</string>
     <string name="close">Закрыть</string>
+    <string name="congratulations">Поздравляем! Вы выучили все слова</string>
+    <string name="finish_button">Выйти</string>
 
 
 </resources>

@@ -18,11 +18,13 @@ class LearnWordsTrainer(
         Word(original = "Biotech", translate = "Биотехнологии"),
         Word(original = "Nanotechnology", translate = "Нанотехнологии"),
         Word(original = "Digital Transformation", translate = "Цифровая трансформация"),
-        Word(original = "GreenTech", translate = "Каберданс"),
-        Word(original = "Server Development", translate = "Разработка ПО"),
+        Word(original = "GreenTech", translate = "Зеленые технологии"),
+        Word(original = "Server Development", translate = "Серверная разработка"),
         Word(original = "Big Data", translate = "Большие данные"),
         Word(original = "Data encryption", translate = "Шифрование данных"),
         Word(original = "Smart Devices", translate = "Умные устройства")
+
+
     ),
 
 
@@ -56,5 +58,14 @@ class LearnWordsTrainer(
             return true
         }
         return false
+    }
+
+    fun getLearnedCount(): Int = dictionary.count { it.learned }
+    fun getTotalCount(): Int = dictionary.size
+
+    fun getLearnedPercent(): Int {
+        val total = getTotalCount()
+        if (total == 0) return 0
+        return (getLearnedCount() * 100) / total
     }
 }
